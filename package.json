@@ -1,11 +1,13 @@
 {
   "name": "auto-git-commit-deepseek",
   "displayName": "auto-git-commit-deepseek",
-  "description": "use deepseek to generate commit message",
-  "version": "1.0.0",
+  "description": "use deepseek to auto generate commit message",
+  "version": "1.0.1",
   "engines": {
     "vscode": "^1.96.0"
   },
+  "publisher": "rayyen",
+  "repository": "https://github.com/rayyen/auto-git-commit-deepseek",
   "categories": [
     "Other"
   ],
@@ -54,7 +56,6 @@
   },
   "dependencies": {
     "auto-git-commit-deepseek": "file:",
-    "axios": "^1.7.9",
     "openai": "^4.80.1"
   }
 }

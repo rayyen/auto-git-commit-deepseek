@@ -4,6 +4,6 @@ All notable changes to the "auto-git-commit-deepseek" extension will be document
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
-## [Unreleased]
+## [Released]
 
 - Initial release

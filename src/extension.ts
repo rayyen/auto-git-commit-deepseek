@@ -10,8 +10,6 @@ export function activate(context: vscode.ExtensionContext) {
     async () => {
       apiKey = await secretStorage.get(API_KEY_NAME);
       if (!apiKey) {
-
-
         // Prompt the user to enter their API key
         apiKey = await vscode.window.showInputBox({
           prompt: "Enter your DeepSeek API key",
@@ -36,7 +34,9 @@ export function activate(context: vscode.ExtensionContext) {
       if (!apiKey) {
         apiKey = await vscode.commands.executeCommand("extension.setApiKey");
         if (!apiKey) {
-          vscode.window.showErrorMessage("API key is required to generate commit messages.");
+          vscode.window.showErrorMessage(
+            "API key is required to generate commit messages."
+          );
           return;
         }
       }
@@ -91,17 +91,30 @@ export function activate(context: vscode.ExtensionContext) {
           response.choices[0].message.content
         );
         vscode.window.showInformationMessage(
-          `Generated Commit Message: ${commitMessage[0]}`
+          `Generated Commit Message:\n\n ${commitMessage[0]}`
         );
 
         // 自動填入 Commit Message
         repository.inputBox.value = commitMessage[0];
-        await repository.add(['.']);
+        let terminal = vscode.window.activeTerminal;
+
+        // 如果沒有活動的終端，創建一個新的終端
+        if (!terminal) {
+          terminal = vscode.window.createTerminal("My Terminal");
+          terminal.show(); // 顯示終端
+        }
+        terminal.sendText("git status", true);
+
         await repository.commit(commitMessage[0]);
         await repository.push();
-      } catch (error) {
+      } catch (error: any) {
         if (error instanceof OpenAI.APIError) {
           vscode.window.showErrorMessage(`API Error: ${error.message}`);
+        } else if (
+          "stdout" in error &&
+          error.stdout.includes("Your branch is up to date")
+        ) {
+          vscode.window.showWarningMessage(`Unexpected Error: ${error}`);
         } else {
           vscode.window.showErrorMessage(`Unexpected Error: ${error}`);
         }

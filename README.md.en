@@ -1,12 +1,10 @@
 # auto-git-commit-deepseek
 
-git 懶人專用
-
-ctrl+shift+p 輸入 generateCommitMessage 即可
+if you are a lazy nerd, this is for you.
 
 ## Features
 
-利用deepseek 自動比對修改差異，依據Angular commit rule產生 git commit訊息，並自動push
+Use DeepSeek to compare the modified content, generate a commit message following the Angular commit rules, and automatically push.
 
 ## Requirements
 
@@ -23,7 +21,3 @@ using SecureStore, will ask for API Key if needed.
 ### 1.0.0
 
 Initial release of ...
-
-### 1.0.1
-
-Improve API Key input workflow
