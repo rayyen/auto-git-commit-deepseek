@@ -19,7 +19,8 @@ Using [DeepSeek](https://www.deepseek.com/) analyze changes, and follow [Angular
 
 ## Requirements
 
-[DeepSeek](https://www.deepseek.com/) API Key
+* [DeepSeek](https://www.deepseek.com/) API Key
+* Must have upstream changes.
 
 ## Extension Settings
 

@@ -19,7 +19,8 @@ a DeepSeek V3 powered VS Code extension, git 懶人專用, ctrl+shift+p 輸入 g
 
 ## Requirements
 
-[DeepSeek](https://www.deepseek.com/) API Key
+* [DeepSeek](https://www.deepseek.com/) API Key
+* 一定要先有upstream chagnes.
 
 ## Extension Settings
 
