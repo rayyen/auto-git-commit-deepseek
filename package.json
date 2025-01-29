@@ -16,14 +16,31 @@
   "contributes": {
     "commands": [
       {
-        "command": "extension.setApiKey",
-        "title": "Set DeepSeek API Key"
+        "command": "deepseek.clearApiKey",
+        "title": "Clear DeepSeek API Key"
       },
       {
-        "command": "extension.genCommitMessage",
+        "command": "deepseek.generateCommit",
         "title": "Gen Commit Message"
       }
     ]
+  },
+  "properties": {
+    "deepseekCommit.model": {
+      "type": "string",
+      "default": "deepseek-chat",
+      "description": "AI model to use"
+    },
+    "deepseekCommit.autoPush": {
+      "type": "boolean",
+      "default": true,
+      "description": "Auto push after commit"
+    },
+    "deepseekCommit.language": {
+      "type": "string",
+      "default": "en",
+      "description": "Commit message language"
+    }
   },
   "activationEvents": [
     "onCommand:extension.setApiKey",
