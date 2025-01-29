@@ -2,19 +2,16 @@
   "name": "auto-git-commit-deepseek",
   "displayName": "auto-git-commit-deepseek",
   "description": "use deepseek to auto generate commit message",
-  "version": "1.0.1",
+  "version": "1.0.7",
   "engines": {
     "vscode": "^1.96.0"
   },
   "publisher": "rayyen",
   "repository": "https://github.com/rayyen/auto-git-commit-deepseek",
   "categories": [
-    "Other"
+    "AI"
   ],
-  "activationEvents": [
-    "onCommand:extension.setApiKey",
-    "onCommand:extension.generateCommitMessage"
-  ],
+  "icon": "image/icon/Capture.PNG",
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
@@ -23,11 +20,15 @@
         "title": "Set DeepSeek API Key"
       },
       {
-        "command": "extension.generateCommitMessage",
-        "title": "Generate Commit Message"
+        "command": "extension.genCommitMessage",
+        "title": "Gen Commit Message"
       }
     ]
   },
+  "activationEvents": [
+    "onCommand:extension.setApiKey",
+    "onCommand:extension.generateCommitMessage"
+  ],
   "scripts": {
     "vscode:prepublish": "npm run package",
     "compile": "webpack",
@@ -56,6 +57,7 @@
   },
   "dependencies": {
     "auto-git-commit-deepseek": "file:",
+    "moment": "^2.30.1",
     "openai": "^4.80.1"
   }
 }

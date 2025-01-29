@@ -1,10 +1,11 @@
 import * as vscode from "vscode";
 import OpenAI from "openai";
+
 export function activate(context: vscode.ExtensionContext) {
   const secretStorage = context.secrets;
   let apiKey: string | undefined;
   const API_KEY_NAME = "deepSeekApiKey";
-
+  const currentLanguage = vscode.env.language;
   let setApiKeyCommand = vscode.commands.registerCommand(
     "extension.setApiKey",
     async () => {
@@ -27,8 +28,8 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
-  let generateCommitMessage = vscode.commands.registerCommand(
-    "extension.generateCommitMessage",
+  let genCommitMessage = vscode.commands.registerCommand(
+    "extension.genCommitMessage",
     async () => {
       apiKey = await secretStorage.get(API_KEY_NAME);
       if (!apiKey) {
@@ -72,19 +73,23 @@ export function activate(context: vscode.ExtensionContext) {
       const changes = await repository.diff(true);
       const formattedChanges = changes
         .split("\n")
-        .filter((line: string) => line.startsWith("+") || line.startsWith("-"))
+        .filter((line: string) => (line.startsWith("+") || line.startsWith("-")) && !line.includes('import') && !line.includes('.png') && !line.includes('.jpg') && !line.includes('.gif'))
         .join("\n");
+      
+      const c = `忽略不重要的修改 產生符合Angular Commit Message Guidelines的git commit ${currentLanguage}語言的內容 ${formattedChanges}`;
+      console.log(c);
 
       try {
         const response = await openai.chat.completions.create({
           messages: [
             {
-              role: "system",
-              content: `產生符合Angular Commit Message Guidelines的git commit 中文內容 ${formattedChanges}`,
+              role:"system",
+              content: c,
             },
           ],
           model: "deepseek-chat",
         });
+        console.log(response);
 
         // 格式化 Commit 訊息
         const commitMessage = extractCodeBlocks(
@@ -103,7 +108,7 @@ export function activate(context: vscode.ExtensionContext) {
           terminal = vscode.window.createTerminal("My Terminal");
           terminal.show(); // 顯示終端
         }
-        terminal.sendText("git status", true);
+        terminal.sendText("git status");
 
         await repository.commit(commitMessage[0]);
         await repository.push();
@@ -123,7 +128,7 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
-  context.subscriptions.push(setApiKeyCommand, generateCommitMessage);
+  context.subscriptions.push(setApiKeyCommand, genCommitMessage);
 }
 // 格式化 Commit 訊息以符合 Angular 規範
 function extractCodeBlocks(text: string | null): string[] {

@@ -1,23 +1,49 @@
 # auto-git-commit-deepseek
 
-if you are a lazy nerd, this is for you.
+a DeepSeek V3 powered VS Code extension, if you are lazy, ctrl+shift+p, input generateCommitMessage , enter!
 
 ## Features
 
-Use DeepSeek to compare the modified content, generate a commit message following the Angular commit rules, and automatically push.
+Using [DeepSeek](https://www.deepseek.com/) analyze changes, and follow [Angular commit format](https://github.com/angular/angular/blob/main/CONTRIBUTING.md) to genereate git commit message and push automatically
+
+**git add .**
+
+![1738129196418](image/README/1738129196418.png)
+
+**Ctrl + Shift + p, generate commit message**
+![1738129330842](image/README/1738129330842.png)
+
+**result example**
+
+![1738128627027](image/README/1738128627027.png)
 
 ## Requirements
 
-deepseek api key
+[DeepSeek](https://www.deepseek.com/) API Key
 
 ## Extension Settings
 
-using SecureStore, will ask for API Key if needed.
+Adopt SecureStore, will ask for API Key if needed.
 
 ## Known Issues
+
+Fail when exceed DeepSeek token limits
 
 ## Release Notes
 
 ### 1.0.0
 
 Initial release of ...
+
+### 1.0.1
+
+Improve API Key input workflow
+
+### 1.0.6
+
+Generate different language according to vscode.env.language.
+
+### 1.0.7
+
+Default ingoring changes like 'import, png, jpg, gif' files
+Remove some illeagal symbol, due to massive attack on DeepSeek server

@@ -1,6 +1,6 @@
 # auto-git-commit-deepseek
 
-a DeepSeek R1 powered VS Code extension, git 懶人專用, ctrl+shift+p 輸入 generateCommitMessage 即可
+a DeepSeek V3 powered VS Code extension, git 懶人專用, ctrl+shift+p 輸入 generateCommitMessage 即可
 
 ## Features
 
@@ -27,6 +27,8 @@ Adopt SecureStore, will ask for API Key if needed.
 
 ## Known Issues
 
+Fail when exceed DeepSeek token limits
+
 ## Release Notes
 
 ### 1.0.0
@@ -36,3 +38,12 @@ Initial release of ...
 ### 1.0.1
 
 Improve API Key input workflow
+
+### 1.0.6
+
+Generate different language according to vscode.env.language.
+
+### 1.0.7
+
+Default ingoring changes like 'import, png, jpg, gif' files
+Remove some illeagal symbol, due to massive attack on DeepSeek server
