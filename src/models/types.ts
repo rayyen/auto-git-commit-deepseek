@@ -10,8 +10,6 @@ export type DiffFilterOptions = {
 };
 
 export type AIConfig = {
-  exludeFiles: string[];
-  excludePatterns: string;
   url: string;
   model: string;
   temperature: number;
