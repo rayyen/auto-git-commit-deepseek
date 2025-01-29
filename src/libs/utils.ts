@@ -25,3 +25,16 @@ export function handleError(error: unknown): CommitMessageResponse {
   }
   return { success: false, error: "Unknown error occurred" };
 }
+
+export function buildPrompt(diff: string, language: string): string {
+  return `
+    generate Angular-style commit messages.Follow these rules:
+    1. Format: <type>(<scope>): <subject>
+    2. Types: feat|fix|docs|style|refactor|test|chore
+    3. Use ${language} for message
+    4. Focus on code changes:
+       ${diff}
+    5. Ignore formatting changes
+    6. Keep subject under 72 characters
+  `;
+}

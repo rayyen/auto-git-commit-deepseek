@@ -1,7 +1,8 @@
 import * as vscode from "vscode";
-import { AIConfig } from "../models/types";
+import { AIConfig, DiffFilterOptions } from "../models/types";
 
 const DEFAULT_CONFIG: AIConfig = {
+  url: "https://api.deepseek.com",
   model: "deepseek-chat",
   temperature: 0.7,
   maxTokens: 500
@@ -23,6 +24,7 @@ export class ConfigManager {
   async getAIConfig(): Promise<AIConfig> {
     const config = vscode.workspace.getConfiguration("deepseekCommit");
     return {
+      url: config.get("url", DEFAULT_CONFIG.url),
       model: config.get("model", DEFAULT_CONFIG.model),
       temperature: config.get("temperature", DEFAULT_CONFIG.temperature),
       maxTokens: config.get("maxTokens", DEFAULT_CONFIG.maxTokens)
@@ -39,5 +41,28 @@ export class ConfigManager {
 
     await this.context.secrets.store(this.API_KEY_NAME, apiKey);
     return apiKey;
+  }
+
+  async getDiffFilterOptions(): Promise<DiffFilterOptions> {
+    const config = vscode.workspace.getConfiguration("deepseekCommit");
+    return {
+      excludeFiles: config.get<string[]>("excludeFiles", []),
+      excludePatterns: this.parsePatterns(
+        config.get<string[]>("excludePatterns", [])
+      )
+    };
+  }
+
+  private parsePatterns(patterns: string[]): RegExp[] {
+    return patterns.map(pattern => {
+      try {
+        // 将用户输入的字符串转换为正则表达式
+        // 示例输入："test.*" → /test.*/
+        return new RegExp(pattern.trim());
+      } catch (error) {
+        vscode.window.showErrorMessage(`无效的正则表达式模式: ${pattern}`);
+        return /$^/; // 返回不匹配任何内容的正则表达式
+      }
+    });
   }
 }

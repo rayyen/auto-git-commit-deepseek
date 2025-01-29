@@ -40,6 +40,24 @@
       "type": "string",
       "default": "en",
       "description": "Commit message language"
+    },
+    "deepseekCommit.excludeFiles": {
+      "type": "array",
+      "default": [
+        ".png",
+        ".jpg",
+        ".gif",
+        ".svg"
+      ],
+      "description": "要排除的文件扩展名列表（支持通配符）"
+    },
+    "deepseekCommit.excludePatterns": {
+      "type": "array",
+      "default": [
+        "import",
+        "// prettier-ignore"
+      ],
+      "description": "要排除的代码模式（支持正则表达式片段）"
     }
   },
   "activationEvents": [

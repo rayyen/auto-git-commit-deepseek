@@ -1,27 +1,46 @@
 import { DiffFilterOptions } from "../models/types";
 
-
 export class DiffProcessor {
-  static process(diff: string, options: DiffFilterOptions = {}): string {
-    const excludedExtensions = options.excludeFiles || ['.png', '.jpg', '.gif'];
-    const excludePatterns = options.excludePatterns || [/import/];
-    
-    let currentFile = '';
-    
-    return diff.split('\n')
-      .filter(line => {
-        if (line.startsWith('diff --git')) {
-          currentFile = line.split(' ')[2];
-          return false;
-        }
-        
-        if (excludedExtensions.some(ext => currentFile.endsWith(ext))) {
-          return false;
-        }
+  static process(diff: string, options: DiffFilterOptions): string {
+    return diff
+      .split("\n")
+      .filter(line => this.filterLine(line, options))
+      .join("\n");
+  }
 
-        return line.match(/^[+-]/) && 
-               !excludePatterns.some(pattern => pattern.test(line));
-      })
-      .join('\n');
+  private static filterLine(line: string, options: DiffFilterOptions): boolean {
+    // 文件路径排除检查
+    if (this.isExcludedFile(line, options.excludeFiles || [])) {
+      return false;
+    }
+
+    // 模式匹配排除检查
+    if (this.matchesPattern(line, options.excludePatterns || [])) {
+      return false;
+    }
+
+    return line.match(/^[+-]/) !== null;
+  }
+
+  private static isExcludedFile(
+    line: string,
+    excludeFiles: string[]
+  ): boolean {
+    if (line.startsWith("diff --git")) {
+      const filePath = line.split(" ")[2];
+      return excludeFiles.some(pattern => 
+        filePath.endsWith(pattern.replace("*", ""))
+      );
+    }
+    return false;
+  }
+
+  private static matchesPattern(
+    line: string,
+    excludePatterns: RegExp[]
+  ): boolean {
+    return excludePatterns.some(pattern => 
+      pattern.test(line.trim())
+    );
   }
 }

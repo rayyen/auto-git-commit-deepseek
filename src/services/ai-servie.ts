@@ -7,11 +7,12 @@ export class AIService {
 
   constructor(private apiKey: string, private config: AIConfig) {}
 
-  async generateCommitMessage(diff: string, language: string): Promise<string> {
+  async generateCommitMessage(question: string): Promise<string> {
     const openai = new OpenAI({
-      baseURL: this.BASE_URL,
+      baseURL: this.config.url,
       apiKey: this.apiKey,
     });
+
 
     const response = await openai.chat.completions.create({
       model: this.config.model,
@@ -20,7 +21,7 @@ export class AIService {
       messages: [
         {
           role: "system",
-          content: this.buildPrompt(diff, language),
+          content: question,
         },
       ],
     });
@@ -32,16 +33,5 @@ export class AIService {
     );
   }
 
-  private buildPrompt(diff: string, language: string): string {
-    return `
-      You are an expert in generating Angular-style commit messages. Follow these rules:
-      1. Format: <type>(<scope>): <subject>
-      2. Types: feat|fix|docs|style|refactor|test|chore
-      3. Use ${language} for message
-      4. Focus on code changes:
-         ${diff}
-      5. Ignore formatting changes
-      6. Keep subject under 72 characters
-    `;
-  }
+
 }

@@ -6,6 +6,35 @@ a DeepSeek V3 powered VS Code extension, if you are lazy, ctrl+shift+p, input ge
 
 Using [DeepSeek](https://www.deepseek.com/) analyze changes, and follow [Angular commit format](https://github.com/angular/angular/blob/main/CONTRIBUTING.md) to genereate git commit message and push automatically
 
+## Availibe Settings
+
+```json
+{
+  "deepseekCommit.url": "https://api.deepseek.com",
+  "deepseekCommit.autoPush": true,
+  "deepseekCommit.language": "zh-CN",
+  "deepseekCommit.model": "deepseek-chat",
+  "deepseekCommit.temperature": 0.7,
+  "deepseekCommit.maxTokens": 500,
+  "deepssekCommit.excludeFiles": [".png", ".jpg", ".gif", ".svg"],
+  "deepssekCommit.excludePatterns": ["import"]
+}
+```
+
+---
+|配置项   |類型| 預設值   |範例|說明   |
+|---|---|---|---|---|
+|url|string| <https://api.deepseek.com>|  |api url|
+|autoPush|boolean   |true   | |提交后自动推送   |
+|language |string  |系统语言 |en  |支持 en, zh-CN, ja 等   |
+|model|string   |deepseek-chat|   |可用模型列表:deepseek-chat,目前只支持 deepseek-chat  |
+|temperature|float| 0.7|  | 創造性(0-2)|
+|maxTokens|number| 500|  | 生成內容最大長度|
+|excludeFiles|string[]|[".png", ".jpg", ".gif", ".svg"]|  |使用通則格式排除特定文件类型|
+|excludePatterns|string[]|["import"]|["^//", "console.log"]|使用Regex片段排除包含特定模式的程式碼片段（自動添加^和$錨點）
+
+
+## How
 **git add .**
 
 ![1738129196418](image/README/1738129196418.png)
@@ -49,3 +78,7 @@ Generate different language according to vscode.env.language.
 * Default ingoring changes keyword like 'import, .png, .jpg, .gif'
 
 * Remove some illegal symbol, due to massive attack on DeepSeek server
+
+### 1.0.8
+
+* support settings feature
