@@ -13,7 +13,6 @@ export class AIService {
       apiKey: this.apiKey,
     });
 
-
     const response = await openai.chat.completions.create({
       model: this.config.model,
       temperature: this.config.temperature,
@@ -32,6 +31,4 @@ export class AIService {
         : response.choices[0].message.content
     );
   }
-
-
 }

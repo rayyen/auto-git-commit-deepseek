@@ -1,9 +1,8 @@
 import { CommitMessageResponse } from "../models/types";
 
-
 export function extractCommitMessage(response: string): string {
   const codeBlocks = extractCodeBlocks(response);
-  return codeBlocks.length > 0 ? codeBlocks[0] : response.split('\n')[0];
+  return codeBlocks.length > 0 ? codeBlocks[0] : response.split("\n")[0];
 }
 
 function extractCodeBlocks(text: string): string[] {
@@ -25,6 +24,8 @@ export function handleError(error: unknown): CommitMessageResponse {
   }
   return { success: false, error: "Unknown error occurred" };
 }
+
+
 
 export function buildPrompt(diff: string, language: string): string {
   return `

@@ -7,7 +7,17 @@ export interface CommitMessageResponse {
 export type DiffFilterOptions = {
   excludeFiles?: string[];
   excludePatterns?: RegExp[];
+  forceTruncat: boolean;
 };
+
+export type GitOptions = {
+  autoPush: boolean;
+  autoAdd: boolean;
+  maxPossibleToken: number;
+  chineseRatio: number;
+  englishRatio: number;
+  safetyMargin: number;
+}
 
 export type AIConfig = {
   url: string;

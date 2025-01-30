@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import { AIConfig, DiffFilterOptions } from "../models/types";
+import { AIConfig, DiffFilterOptions, GitOptions } from "../models/types";
 
 const DEFAULT_CONFIG: AIConfig = {
   url: "https://api.deepseek.com",
@@ -49,7 +49,20 @@ export class ConfigManager {
       excludeFiles: config.get<string[]>("excludeFiles", []),
       excludePatterns: this.parsePatterns(
         config.get<string[]>("excludePatterns", [])
-      )
+      ),
+      forceTruncat: config.get("forceTruncat", true)
+    };
+  }
+  
+  async getGitOptions(): Promise<GitOptions> {
+    const config = vscode.workspace.getConfiguration("deepseekCommit");
+    return {
+      autoPush: config.get("autoPush", true),
+      autoAdd: config.get("autoAdd", true),
+      maxPossibleToken: config.get("maxPossibleToken", 32768),
+      chineseRatio: config.get("chineseRatio", 0.6),
+      englishRatio: config.get("englishRatio", 0.3),
+      safetyMargin: config.get("safetyMargin", 0.9)
     };
   }
 

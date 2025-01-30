@@ -9,12 +9,10 @@ export class DiffProcessor {
   }
 
   private static filterLine(line: string, options: DiffFilterOptions): boolean {
-    // 文件路径排除检查
     if (this.isExcludedFile(line, options.excludeFiles || [])) {
       return false;
     }
-
-    // 模式匹配排除检查
+    
     if (this.matchesPattern(line, options.excludePatterns || [])) {
       return false;
     }
