@@ -1,5 +1,7 @@
 # auto-git-commit-deepseek
 
+[English](https://github.com/rayyen/auto-git-commit-deepseek/blob/main/README.md.en "English")
+
 a DeepSeek V3 powered VS Code extension, git 懶人專用, ctrl+shift+p 輸入 gen Commit Message 即可
 
 ## Features
@@ -13,14 +15,7 @@ a DeepSeek V3 powered VS Code extension, git 懶人專用, ctrl+shift+p 輸入 g
 
 ---
 
-### 常用排除模式示例
-
-* `^//`：排除所有注释
-* `console.*`：排除所有 console 语句
-* `\bTODO\b`：排除包含 TODO 的代码
-* `\d{4}-\d{2}-\d{2}`：排除日期格式
-
-### How
+## Usage
 
 **git add .**
 
@@ -38,6 +33,8 @@ a DeepSeek V3 powered VS Code extension, git 懶人專用, ctrl+shift+p 輸入 g
 Adopt SecureStore, will ask for API Key if needed.
 
 ## Extension Settings
+
+因為diff後的訊息有很多內容可能不必要，或者是有長度問題，請參考設定，基本上預設值能滿足大多數情況
 
 ---
 
@@ -57,28 +54,37 @@ Adopt SecureStore, will ask for API Key if needed.
 
 ---
 
-### 提問之Token長度設定
+### 提問之Token長度設定 (採用推論計算長度方式，非精確計算)
 
-| 配置项          | 類型     | 預設值                                            | 範例                   | 說明                                                          |
-| --------------- | -------- | ------------------------------------------------- | ---------------------- | ------------------------------------------------------------- |
-| forceTruncat| boolean   | true                         |    | 只有這個設定為true 以下設定才會生效 |
-| maxPossibleToken        | number  | 32768                                              |                        | 參考模型版本長度對照表                                            |
-| chineseRatio         | float  | 0.6                                              |                        | 0.1~0.9                            |
-| englishRatio        | float   | 0.3                                          |                      | 0.1~0.9                                         |
-| safetyMargin           | float   | 0.9                                     |                        | 長度保留緩衝，避免超過長度限制           |
+| 配置项           | 類型    | 預設值 | 範例 | 說明                                   |
+| ---------------- | ------- | ------ | ---- | -------------------------------------- |
+| forceTruncat     | boolean | true   |      | 只有這個設定為true 以下設定才會生效    |
+| maxPossibleToken | number  | 32768  |      | 參考模型版本長度對照表                 |
+| chineseRatio     | float   | 0.6    |      | 0.1~0.9                                |
+| englishRatio     | float   | 0.3    |      | 0.1~0.9                                |
+| safetyMargin     | float   | 0.9    |      | 0.1~0.9 長度保留緩衝，避免超過長度限制 |
+
+### 版本長度對照表
 
 ---
 
-| 模型版本 | 最大 Tokens | 建議值 |
-| ------- | ---------- | ----- |
-| DeepSeek-7B | 4096 | 3000 |
-| DeepSeek-16K | 16384 | 12000 |
-| DeepSeek-MoE-16B | 32768 | 28000 |
+| 模型版本         | 最大 Tokens | 建議值 |
+| ---------------- | ----------- | ------ |
+| DeepSeek-7B      | 4096        | 3000   |
+| DeepSeek-16K     | 16384       | 12000  |
+| DeepSeek-MoE-16B | 32768       | 28000  |
+
+### 常用排除模式示例
+
+* `^//`：排除所有注释
+* `console.*`：排除所有 console 语句
+* `\bTODO\b`：排除包含 TODO 的代码
+* `\d{4}-\d{2}-\d{2}`：排除日期格式
 
 ```json
 {
   "deepseekCommit.autoPush": true,
-  "deepseekCommit.autoAdd": ture,
+  "deepseekCommit.autoAdd": true,
   "deepseekCommit.language": "zh-CN",
   "deepseekCommit.model": "deepseek-chat",
   "deepseekCommit.temperature": 0.7,

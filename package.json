@@ -2,7 +2,7 @@
   "name": "auto-git-commit-deepseek",
   "displayName": "auto-git-commit-deepseek",
   "description": "use deepseek to auto generate commit message",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "engines": {
     "vscode": "^1.96.0"
   },
